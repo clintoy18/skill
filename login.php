@@ -18,16 +18,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         switch($_SESSION['role']){
 
             case "admin":
-                header("Location: admin/index.php");
+                header("Location: public/participants/index.php");
                 break;
                 
             case "teacher":
-                header("Location: teacher/index.php");
+                header("Location: public/participants/index.php");
                 break;
                 
             case "student":
                 default:
-                header("Location: student/index.php");
+                header("Location: public/events/index.php");
                 break;
         }exit();
     }else{
