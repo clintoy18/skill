@@ -25,15 +25,15 @@ class Users
         return $stmt->get_result();
     }
 
-    public function create($username, $password, $fullname, $email, $role)
+    public function create($username, $password, $role)
     {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $this->connection->prepare(
-            "INSERT INTO users(username, passwordHash, fullname, email, role) 
-            VALUES (?, ?, ?, ?, ?)"
+            "INSERT INTO users(username, password, role) 
+            VALUES (?, ?, ?)"
         );
-        $stmt->bind_param("sssss", $username, $passwordHash, $fullname, $email, $role);
+        $stmt->bind_param("sss", $username, $password, $role);
 
         if ($stmt->execute()) {
             return "User created successfully";
@@ -42,14 +42,14 @@ class Users
         }
     }
 
-    public function update($userId, $username, $password, $fullname, $email, $role)
+    public function update($userId, $username, $password, $role)
     {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $this->connection->prepare(
-            "UPDATE users SET username = ?, passwordHash = ?, fullname = ?, email = ?, role = ? WHERE userId = ?"
+            "UPDATE users SET username = ?, password = ?, role = ? WHERE userId = ?"
         );
-        $stmt->bind_param("sssssi", $username, $passwordHash, $fullname, $email, $role, $userId);
+        $stmt->bind_param("sssssi", $username, $password, $role, $userId);
 
         if ($stmt->execute()) {
             return "User updated successfully";
@@ -88,7 +88,7 @@ class Users
 
         if ($result->num_rows === 1) { //check if num or rows = 1
             $user = $result->fetch_assoc(); // fetch by array
-            if (password_verify($password, $user['passwordHash'])) { // verify password
+            if (password_verify($password, $user['password'])) { // verify password
                 return $user; //return
             } else {
                 return false; 

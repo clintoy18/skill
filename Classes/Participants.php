@@ -33,31 +33,31 @@ class Participants
         }
     }
 
-    public function update( $partId, $evCode, $partFName, $partLName, $partDRate)
+    public function update($partId, $evCode, $partFName, $partLName, $partDRate)
     {
         $stmt = $this->connection->prepare("UPDATE participants SET partId = ?, evCode = ?,partFName = ?, partLName = ?,partDRate =?  WHERE partId = $partId");
         $stmt->bind_param("isssi", $partId, $evCode, $partFName, $partLName, $partDRate);
-        $stmt->execute();
         if ($stmt->execute()) {
             return "Participants updated successfully!";
         } else {
             return "Error updating Participants!";
         }
     }
-    public function getById($partId){
+    public function getById($partId)
+    {
         return $this->connection->query("SELECT * FROM participants WHERE isDeleted = 0 AND partId = $partId");
     }
     public function delete($partId)
     {
-         $stmt = $this->connection->prepare("UPDATE participants SET isDeleted = ? WHERE partId = $partId");
+        $stmt = $this->connection->prepare("UPDATE participants SET isDeleted = 1 WHERE partId = ?");
         $stmt->bind_param("i", $partId);
-        $stmt->execute();
         if ($stmt->execute()) {
             return "Participants deleted successfully!";
         } else {
             return "Error deleting Participants!";
         }
     }
+    
     public function search($partId)
     {
         return $this->connection->query("SELECT * FROM participants
@@ -65,6 +65,5 @@ class Participants
         participants.evCode = events.evCode 
         WHERE participants.partId
         LIKE '%$partId%' AND participants.isDeleted = 0");
-  
     }
 }

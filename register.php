@@ -5,9 +5,7 @@ $jsAlert = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $user->create(
             $_POST['username'],
-            $_POST['hashpassword'],
-            $_POST['fullname'],
-            $_POST['email'],
+            $_POST['password'],
             $_POST['role']
         );
     $jsAlert = "<script>
@@ -32,13 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="" method="post">
             <label for="username">Username</label>
             <input type="text" name="username" id="username" placeholder="Enter username">
-            <label for="username">hashpassword</label>
-            <input type="hashpassword" name="hashpassword" id="hashpassword" placeholder="Enter hashpassword">
-            <label for="username">fullname</label>
-            <input type="text" name="fullname" id="fullname" placeholder="Enter fullname">
-            <label for="username">email</label>
-            <input type="text" name="email" id="email" placeholder="Enter email">
-            <label for="username">role</label>
+            <label for="username">Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter password">
+            <label for="role">role</label>
             <select name="role" id="role">
                 <option value="">Select role</option>
                 <option value="student">student</option>

@@ -1,10 +1,10 @@
 <?php
 
-require_once "../../Classes/Event.php";
-$event = new Event();
+require_once "../../Classes/Participants.php";
+$participant = new Participants();
 $jsAlert = '';
-$message = "Event Deleted Successfully!";
-$message = $event->delete($_GET['evCode']);
+$message = "Participant Deleted Successfully!";
+$message = $participant->delete($_GET['partId']);
 $jsAlert = "<script>
     alert('".addslashes($message)."');
     window.location.href= 'index.php';
